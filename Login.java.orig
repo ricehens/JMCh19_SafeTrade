@@ -26,5 +26,9 @@ public interface Login
    */
   int login(String name, String password);
 }
-// hello
+<<<<<<< HEAD
+
 // hi
+=======
+// hello
+>>>>>>> 4a75488bb535ce971e42e301a71f60efb7ef9984
