@@ -18,14 +18,11 @@ import junit.framework.JUnit4TestAdapter;
  *   StockExchange
  *   Stock
  *
- * @author TODO Name of principal author
- * @author TODO Name of group member
- * @author TODO Name of group member
- * @version TODO date
+ * @author Andrew Yuan
+ * @author Eric Shen
+ * @author Sophia Yang
+ * @version 2022-03-09
  * @author Assignment: JM Chapter 19 - SafeTrade
- * 
- * @author Sources: TODO sources
- *
  */
 public class JUSafeTradeTest
 {

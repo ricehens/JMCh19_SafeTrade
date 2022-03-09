@@ -26,5 +26,4 @@ public interface Login
    */
   int login(String name, String password);
 }
-// hello
-// hi
+
