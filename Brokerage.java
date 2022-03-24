@@ -11,12 +11,24 @@ public class Brokerage implements Login
     private StockExchange exchange;
 
     // TODO complete class
+
+    /**
+     * Constructs a Brokerage as part of a certain StockExchange.
+     * @param exchange the StockExchange it is for
+     */
     public Brokerage(StockExchange exchange) {
         traders = new TreeMap<String, Trader>();
         loggedTraders = new TreeSet<Trader>();
         this.exchange = exchange;
     }
-
+    
+    /**
+     * Registers a new trader with a given name and password.
+     * @param name the screen name of the trader
+     * @param password the password for the trader
+     * @return 0 if successful, -1 if invalid screen name, 
+     * -2 if invalid password, -3 if screen name already taken
+     */
     public int addUser(String name, String password) {
         if (name.length() < 4 || name.length() > 10) {
             return -1;
@@ -32,10 +44,23 @@ public class Brokerage implements Login
         return 0;
     }
 
+    /**
+     * Requests a quote for a given stock from the stock 
+     * exchange and passes it along to the trader
+     * @param symbol the symbol of the Stock to request
+     * @param trader the trader who requested a quote
+     */
     public void getQuote(String symbol, Trader trader) {
         trader.receiveMessage(symbol);
     }
-
+    
+    /**
+     * Logs in a trader with a given name and password.
+     * @param name the screen name of the trader
+     * @param password the password for the trader
+     * @return 0 if successful, -1 if screen name not found, 
+     * -2 if invalid password, -3 if user already logged in
+     */
     public int login(String name, String password) {
         if (!traders.containsKey(name)) {
             return -1;
@@ -55,14 +80,22 @@ public class Brokerage implements Login
         return 0;
     }
 
+    /**
+     * Logs a trader out of the system.
+     * @param trader the trader to log out
+     */
     public void logout(Trader trader) {
         loggedTraders.remove(trader);
     }
     
+    /**
+     * Places an order on the StockExchange.
+     * @param order the TradeOrder to place
+     */
     public void placeOrder(TradeOrder order) {
         exchange.placeOrder(order);
     }
-    
+
     //
     // The following are for test purposes only
     //
