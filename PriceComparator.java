@@ -46,7 +46,7 @@ public class PriceComparator implements java.util.Comparator<TradeOrder>
         }
 
         else if (order1.isLimit() && order2.isMarket()) {
-            return -1;
+            return 1;
         }
 
         else {
