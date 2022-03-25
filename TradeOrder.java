@@ -17,12 +17,22 @@ public class TradeOrder
     private int numShares;
     private double price;
 
-   // PriorityQueue<TradeOrder> pq = new PriorityQueue<TradeOrder>();
-    //compare two tradeorder objects based on prices, ascending 
-    //or descending comparator
-
+    // PriorityQueue<TradeOrder> pq = new PriorityQueue<TradeOrder>();
+    // compare two tradeorder objects based on prices, ascending 
+    // or descending comparator
 
     // TODO complete class
+
+    public TradeOrder(Trader trader, String symbol, 
+                    boolean buyOrder, boolean marketOrder, 
+                    int numShares, double price) {
+        this.trader = trader;
+        this.symbol = symbol;
+        this.buyOrder = buyOrder;
+        this.marketOrder = marketOrder;
+        this.numShares = numShares;
+        this.price = price;
+    }
 
     public Trader getTrader()
     {
@@ -37,8 +47,8 @@ public class TradeOrder
     public boolean isBuy()
     {
         return buyOrder;
-    
     }
+    
     public boolean isSell()
     {
         return !buyOrder;
@@ -67,14 +77,11 @@ public class TradeOrder
     
     public void subtractShares(int shares)
     {
-        if (shares>numShares)
+        if (shares > numShares)
             throw new IllegalArgumentException(); 
         else
-        {
-            numShares-= shares;
-        }
-        }
-
+            numShares -= shares;
+    }
 
     //
     // The following are for test purposes only
