@@ -22,11 +22,11 @@ public class Trader implements Comparable<Trader>
         password = pswd;
     }
 
-    //getter methods
+    // getter methods
     public java.lang.String getName()
-{
-    return screenName;
-}
+    {
+        return screenName;
+    }
 
     public java.lang.String getPassword()
     {
@@ -35,46 +35,39 @@ public class Trader implements Comparable<Trader>
 
     public int compareTo(Trader other)
     {
-        int x = other.screenName.toLowerCase().hashCode();
-        int y = screenName.toLowerCase().hashCode();
-        return x-y;
-        
+        return getName().compareToIgnoreCase(other.getName());
     }
 
-    public boolean equals(java.lang.Object other){
-        if (other instanceof Trader){
-            Trader t= (Trader) other;
-            return (t.screenName.equals( this.screenName ));
+    public boolean equals(java.lang.Object other) {
+        if (other instanceof Trader) {
+            Trader t = (Trader) other;
+            return getName().equals(t.getName());
         }
         else
-        throw new ClassCastException(); 
+            throw new ClassCastException(); 
     }
 
     public void openWindow()
     {
-        
         myWindow = new TraderWindow(this);
-        if (mailbox.size()!=0){
-        for (String a: mailbox)
-        {
-        myWindow.showMessage(a);
-        mailbox.remove(a);
+        if (mailbox.size() != 0){
+            for (String a: mailbox)
+            {
+                myWindow.showMessage(a);
+                mailbox.remove(a);
+            }
         }
-    }
     }
 
     public boolean hasMessages()
     {
-        if (mailbox.size()!=0)
-            return true;
-        return false;
-
+        return mailbox.size() != 0;
     }
 
     public void receiveMessage(java.lang.String msg)
     {
         mailbox.add(msg);
-        if (myWindow!=null)
+        if (myWindow != null)
         {
             for (String a: mailbox)
             {
@@ -86,19 +79,18 @@ public class Trader implements Comparable<Trader>
 
     public void getQuote(java.lang.String symbol)
     {
-        Brokerage.getQuote(symbol);
-
+        brokerage.getQuote(symbol, this);
     }
 
     public void placeOrder(TradeOrder order)
     {
-        Brokerage.placeOrder(order);
+        brokerage.placeOrder(order);
     }
 
     public void quit()
     {
-        Brokerage.logout();
-        TraderWindow.getWindows() = null;
+        brokerage.logout(this);
+        myWindow = null;
     }
 
     //
