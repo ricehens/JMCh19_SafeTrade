@@ -182,7 +182,74 @@ public class JUSafeTradeTest
     // --Test Trader
     
     // TODO your tests here
+    // --Test Trader
     
+private Brokerage brokerage;
+private String screenName, password;
+private TraderWindow myWindow;
+private Queue<String> mailbox;
+
+
+    @Test
+    public void traderConstructor()
+    {
+        Trader to = new Trader( null,
+        screenName,password);
+        String toStr = to.toString();
+
+        assertTrue( "<< Invalid Trader Constructor >>",
+                    toStr.contains( "Trader[Brokerage brokerage:null" )
+                        && toStr.contains( "java.lang.String screenName:" + screenName )
+                        && toStr.contains( "java.lang.String password:" + password ));
+    }
+    @Test
+    public void traderGetName()
+    {
+        Trader to = new Trader( null, screenName,password);
+
+        assertEquals( "<< Trader: " + to.getName() + " should be "
+             + screenName + " >>", screenName, to.getName());
+
+    }
+
+    @Test
+    public void traderGetPassword()
+    {
+        Trader to = new Trader( null, screenName,password);
+
+        assertEquals( "<< Trader: " + to.getPassword() + " should be "
+             + password + " >>", password, to.getPassword());
+
+    }
+
+    @Test
+    public void traderCompareTo()
+    {
+        Trader to = new Trader( null, screenName,password);
+        Trader to2 = new Trader( null, screenName,password);
+
+        assertEquals( "<< Trader: " + to2.getName() + " should be "
+             + screenName + " >>", 0, to2.compareTo(to));
+    }
+
+    @Test
+    public void traderEquals()
+    {
+        Trader to = new Trader( null, screenName,password);
+        Trader to2 = new Trader( null, screenName,password);
+
+        assertTrue( "<< Trader: " + to2.getName()+ " should be "
+             + screenName + " >>", to.equals(to2));
+    }
+
+    @Test
+    public void traderHasMessages()
+    {
+        Trader to = new Trader( null, screenName,password);
+
+        assertFalse( "<< Trader: " + to.getName() + " should have no messages "
+             +" >>", to.hasMessages());
+    }
     
     // --Test Brokerage
     
