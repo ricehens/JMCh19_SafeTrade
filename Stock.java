@@ -49,7 +49,7 @@ public class Stock {
 
             if (buy.isLimit()) {
                 if (sell.isLimit()) {
-                    if (buy.getPrice() >= sell.getPrice()) {
+                    if (buy.getPrice() < sell.getPrice()) {
                         break;
                     }
                     price = sell.getPrice();
