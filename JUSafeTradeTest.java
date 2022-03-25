@@ -500,7 +500,20 @@ public class JUSafeTradeTest
     
     // --Test Stock
     
-    // TODO your tests here
+    @Test
+    public void stockConstructor() {
+        Stock stock = new Stock("GGGL", "Giggle.com", "1.00");
+        assertNotNull(stock);
+    }
+
+    @Test
+    public void stockGetQuote() {
+        Stock stock = new Stock("GGGL", "Giggle.com", "1.00");
+        assertEquals(stock.getQuote(),
+                "Giggle.com (GGGL)\n"
+                + "Price: 1.00  hi: 1.00  lo: 1.00  vol: 0"
+                + "Ask: none  Bid: none");
+    }
 
     
     // Remove block comment below to run JUnit test in console
