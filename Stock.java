@@ -101,11 +101,18 @@ public class Stock {
             : String.format("Ask: %.2f size: %d",
                     buyOrders.peek().getPrice(), buyOrders.peek().getShares());
         String bid = sellOrders.isEmpty() ? "Ask: none"
-            : String.format("Ask: %.2f size: %d",
+            : String.format("Bid: %.2f size: %d",
                     sellOrders.peek().getPrice(),
                     sellOrders.peek().getShares());
         return init + ask + "  " + bid;
     }
+
+    /*
+    public static void main(String[] args) {
+        Stock stock = new Stock("GGGL", "Giggle.com", 1.00);
+        System.out.println(stock.getQuote());
+    }
+    */
 
     /**
      * Places a trading order for this stock.
