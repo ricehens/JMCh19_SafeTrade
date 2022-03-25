@@ -484,8 +484,8 @@ public class JUSafeTradeTest
         Trader trader = new Trader(bk, "John", "pass");
         TradeOrder to = new TradeOrder(trader, symbol, buyOrder, marketOrder, numShares, price);
         bk.placeOrder(to);
-        assertTrue( "<< Brokerage: " + exchange.getQuote().equals(symbol + " not found") + 
-            " should be " + false + " >>", !exchange.getQuote().equals(symbol + " not found"));
+        assertTrue( "<< Brokerage: " + exchange.getQuote(symbol).equals(symbol + " not found") + 
+            " should be " + false + " >>", !exchange.getQuote(symbol).equals(symbol + " not found"));
     }
     
     // --Test StockExchange
@@ -502,13 +502,13 @@ public class JUSafeTradeTest
     
     @Test
     public void stockConstructor() {
-        Stock stock = new Stock("GGGL", "Giggle.com", "1.00");
+        Stock stock = new Stock("GGGL", "Giggle.com", 1.00);
         assertNotNull(stock);
     }
 
     @Test
     public void stockGetQuote() {
-        Stock stock = new Stock("GGGL", "Giggle.com", "1.00");
+        Stock stock = new Stock("GGGL", "Giggle.com", 1.00);
         assertEquals(stock.getQuote(),
                 "Giggle.com (GGGL)\n"
                 + "Price: 1.00  hi: 1.00  lo: 1.00  vol: 0"

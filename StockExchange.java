@@ -39,7 +39,7 @@ public class StockExchange
             stock.placeOrder(order);
         }
         else {
-            order.getTrader().receiveMessage(symbol + " not found");
+            order.getTrader().receiveMessage(order.getSymbol() + " not found");
         }
     }
 
