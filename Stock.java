@@ -97,7 +97,7 @@ public class Stock {
         String init = String.format("%s (%s)%n"
                 + "Price: %.2f  hi: %.2f  lo: %.2f  vol: %d%n",
                 companyName, stockSymbol, lastPrice, hiPrice, loPrice, volume);
-        String ask = buyOrder.isEmpty() ? "Ask: none"
+        String ask = buyOrders.isEmpty() ? "Ask: none"
             : String.format("Ask: %.2f size: %d",
                     buyOrders.peek().getPrice(), buyOrders.peek().getShares());
         String bid = sellOrders.isEmpty() ? "Ask: none"
@@ -134,43 +134,35 @@ public class Stock {
     // The following are for test purposes only
     //
 
-    protected String getStockSymbol()
-    {
+    protected String getStockSymbol() {
         return stockSymbol;
     }
 
-    protected String getCompanyName()
-    {
+    protected String getCompanyName() {
         return companyName;
     }
 
-    protected double getLoPrice()
-    {
+    protected double getLoPrice() {
         return loPrice;
     }
 
-    protected double getHiPrice()
-    {
+    protected double getHiPrice() {
         return hiPrice;
     }
 
-    protected double getLastPrice()
-    {
+    protected double getLastPrice() {
         return lastPrice;
     }
 
-    protected int getVolume()
-    {
+    protected int getVolume() {
         return volume;
     }
 
-    protected PriorityQueue<TradeOrder> getBuyOrders()
-    {
+    protected PriorityQueue<TradeOrder> getBuyOrders() {
         return buyOrders;
     }
 
-    protected PriorityQueue<TradeOrder> getSellOrders()
-    {
+    protected PriorityQueue<TradeOrder> getSellOrders() {
         return sellOrders;
     }
 
