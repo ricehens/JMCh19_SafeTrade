@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
  * Represents a stock in the SafeTrade project
  */
 public class Stock {
-    public static DecimalFormat money = new DecimalFormat("0.00");
+    // public static DecimalFormat money = new DecimalFormat("0.00");
 
     private String stockSymbol;
     private String companyName;
@@ -14,7 +14,6 @@ public class Stock {
     private int volume;
     private PriorityQueue<TradeOrder> buyOrders, sellOrders;
 
-    // TODO complete class
     /**
      * Constructs a new stock with a given symbol, company name, and starting
      * price.
@@ -26,16 +25,67 @@ public class Stock {
     public Stock(String symbol, String name, double price) {
         stockSymbol = symbol;
         companyName = name;
-        loPrice = hiPrice = lastPrice = price; 
-
+        loPrice = price;
+        hiPrice = price;
+        lastPrice = price;
         volume = 0;
+
+        sellOrders = new PriorityQueue<>(new PriceComparator(true));
+        buyOrders = new PriorityQueue<>(new PriceComparator(false));
     }
 
     /**
      * Executes as many pending orders as possible.
      */
     protected void executeOrders() {
+        while (true) {
+            TradeOrder buy = buyOrders.peek();
+            TradeOrder sell = sellOrders.peek();
+            if (buy == null || sell == null) {
+                break;
+            }
 
+            double price;
+
+            if (buy.isLimit()) {
+                if (sell.isLimit()) {
+                    if (buy.getPrice() >= sell.getPrice()) {
+                        break;
+                    }
+                    price = sell.getPrice();
+                }
+                else { // sell is market
+                    price = buy.getPrice();
+                }
+            }
+            else { // buy is market
+                if (sell.isLimit()) {
+                    price = sell.getPrice();
+                }
+                else { // sell is market
+                    price = lastPrice;
+                }
+            }
+
+            int shares = Math.min(buy.getShares(), sell.getShares());
+            buy.subtractShares(shares);
+            sell.subtractShares(shares);
+            if (buy.getShares() == 0) {
+                buyOrders.poll();
+            }
+            if (sell.getShares() == 0) {
+                sellOrders.poll();
+            }
+
+            loPrice = Math.min(loPrice, price);
+            hiPrice = Math.max(hiPrice, price);
+            volume += shares;
+
+            String msg = String.format("%d %s at %.2f amt %.2f",
+                    shares, stockSymbol, price, shares * price);
+            buy.getTrader().receiveMessage("You bought: " + msg);
+            sell.getTrader().receiveMessage("You sold: " + msg);
+        }
     }
 
     /**
@@ -44,8 +94,17 @@ public class Stock {
      * @return a quote string for this stock
      */
     public String getQuote() {
-
-        return "";
+        String init = String.format("%s (%s)%n"
+                + "Price: %.2f  hi: %.2f  lo: %.2f  vol: %d%n",
+                companyName, stockSymbol, lastPrice, hiPrice, loPrice, volume);
+        String ask = buyOrder.isEmpty() ? "Ask: none"
+            : String.format("Ask: %.2f size: %d",
+                    buyOrders.peek().getPrice(), buyOrders.peek().getShares());
+        String bid = sellOrders.isEmpty() ? "Ask: none"
+            : String.format("Ask: %.2f size: %d",
+                    sellOrders.peek().getPrice(),
+                    sellOrders.peek().getShares());
+        return init + ask + "  " + bid + System.getProperty("line.separator");
     }
 
     /**
@@ -54,28 +113,42 @@ public class Stock {
      * @param order the order
      */
     public void placeOrder(TradeOrder order) {
+        if (order.isBuy()) { 
+            buyOrders.offer(order);
+        }
+        else {
+            sellOrders.offer(order);
+        }
 
+        order.getTrader().receiveMessage(
+                String.format("New order:  %s %s (%s)%n%d shares at %s",
+                    order.isBuy() ? "Buy" : "Sell", stockSymbol, companyName,
+                    order.getShares(),
+                    order.isMarket() ? "market"
+                    : String.format("$%.2f", order.getPrice())));
+
+        executeOrders();
     }
-    
+
     //
     // The following are for test purposes only
     //
-    
+
     protected String getStockSymbol()
     {
         return stockSymbol;
     }
-    
+
     protected String getCompanyName()
     {
         return companyName;
     }
-    
+
     protected double getLoPrice()
     {
         return loPrice;
     }
-    
+
     protected double getHiPrice()
     {
         return hiPrice;
@@ -85,7 +158,7 @@ public class Stock {
     {
         return lastPrice;
     }
-    
+
     protected int getVolume()
     {
         return volume;
@@ -95,12 +168,12 @@ public class Stock {
     {
         return buyOrders;
     }
-    
+
     protected PriorityQueue<TradeOrder> getSellOrders()
     {
         return sellOrders;
     }
-    
+
     /**
      * <p>
      * A generic toString implementation that uses reflection to print names and
