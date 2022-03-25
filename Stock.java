@@ -1,6 +1,6 @@
 import java.util.*;
 import java.lang.reflect.*;
-import java.text.DecimalFormat;
+// import java.text.DecimalFormat;
 
 /**
  * Represents a stock in the SafeTrade project
@@ -104,7 +104,7 @@ public class Stock {
             : String.format("Ask: %.2f size: %d",
                     sellOrders.peek().getPrice(),
                     sellOrders.peek().getShares());
-        return init + ask + "  " + bid + System.getProperty("line.separator");
+        return init + ask + "  " + bid;
     }
 
     /**
