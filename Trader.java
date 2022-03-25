@@ -20,6 +20,7 @@ public class Trader implements Comparable<Trader>
         this.brokerage = brokerage;
         screenName = name;
         password = pswd;
+        mailbox = new LinkedList<String>();
     }
 
     // getter methods
