@@ -100,7 +100,7 @@ public class Stock {
         String ask = buyOrders.isEmpty() ? "Ask: none"
             : String.format("Ask: %.2f size: %d",
                     buyOrders.peek().getPrice(), buyOrders.peek().getShares());
-        String bid = sellOrders.isEmpty() ? "Ask: none"
+        String bid = sellOrders.isEmpty() ? "Bid: none"
             : String.format("Bid: %.2f size: %d",
                     sellOrders.peek().getPrice(),
                     sellOrders.peek().getShares());
