@@ -6,18 +6,28 @@ import java.util.*;
  * <code>HashMap</code> of stocks, keyed by a stock symbol. It has methods to
  * list a new stock, request a quote for a given stock symbol, and to place a
  * specified trade order.
+ * @author Andrew Yuan
+ * @author Eric Shen
+ * @author Sophia Yang
+ * @version 2022-03-09
  */
 public class StockExchange
 {
     private Map<String, Stock> listedStocks;
-    
-    // TODO complete class
 
+    /**
+     * Constructs a StockExchange.
+     */
     public StockExchange()
     {
         listedStocks = new HashMap<String, Stock>();
     }
 
+    /**
+     * Returns a quote for a given stock.
+     * @param symbol stock symbol
+     * @return a text message that contains the quote.
+     */
     public String getQuote(String symbol)
     {
         if (listedStocks.containsKey(symbol)) {
@@ -26,12 +36,23 @@ public class StockExchange
         return symbol + " not found";
     }
 
+    /**
+     * Adds a new stock with given parameters to the listed stocks.
+     * @param symbol stock symbol
+     * @param name full company name
+     * @param price opening stock price
+     */
     public void listStock(String symbol, String name, double price)
     {
         Stock stock = new Stock(symbol, name, price);
         listedStocks.put(symbol, stock);
     }
 
+    /**
+     * Places a trade order by calling <code>stock.placeOrder</code>
+     * for the stock specified by the stock symbol in the trade order.
+     * @param order a trading order to be placed with this stock exchange
+     */
     public void placeOrder(TradeOrder order)
     {
         if (listedStocks.containsKey(order.getSymbol())) {
@@ -46,6 +67,11 @@ public class StockExchange
     //
     // The following are for test purposes only
     //
+    
+    /**
+     * Returns the listed stocks.
+     * @return listedStocks
+     */
     protected Map<String, Stock> getListedStocks()
     {
         return listedStocks;
