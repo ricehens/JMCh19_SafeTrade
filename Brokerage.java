@@ -53,7 +53,7 @@ public class Brokerage implements Login
      * @param trader the trader who requested a quote
      */
     public void getQuote(String symbol, Trader trader) {
-        trader.receiveMessage(symbol);
+        trader.receiveMessage(exchange.getQuote(symbol));
     }
     
     /**
