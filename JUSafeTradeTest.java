@@ -490,10 +490,8 @@ public class JUSafeTradeTest
     
     // --Test StockExchange
     
-    // TODO your tests here
     @Test
-    public void stockExchangeConstructor()
-    {
+    public void stockExchangeConstructor() {
         StockExchange exchange = new StockExchange();
         assertNotNull(exchange);
     }
@@ -502,19 +500,51 @@ public class JUSafeTradeTest
     
     @Test
     public void stockConstructor() {
-        Stock stock = new Stock("GGGL", "Giggle.com", 1.00);
+        Stock stock = new Stock(symbol, "Giggle.com", price);
         assertNotNull(stock);
     }
 
     @Test
     public void stockGetQuote() {
-        Stock stock = new Stock("GGGL", "Giggle.com", 1.00);
+        Stock stock = new Stock(symbol, "Giggle.com", price);
         assertEquals(stock.getQuote(),
-                "Giggle.com (GGGL)\n"
-                + "Price: 1.00  hi: 1.00  lo: 1.00  vol: 0"
-                + "Ask: none  Bid: none");
+                String.format("Giggle.com (%s)%n"
+                    + "Price: %.2f  hi: %.2f  lo: %.2f  vol: 0%n"
+                    + "Ask: none  Bid: none",
+                    symbol, price, price, price));
     }
 
+    @Test
+    public void stockPlaceOrder() {
+        Stock stock = new Stock(symbol, "Giggle.com", price);
+        StockExchange exchange = new StockExchange();
+        Brokerage bk = new Brokerage(exchange);
+        Trader trader = new Trader(bk, "John", "pass");
+        TradeOrder to = new TradeOrder(trader, symbol, buyOrder,
+                marketOrder, numShares, price);
+
+        stock.placeOrder(to);
+        assertTrue(stock.getBuyOrders().size() == 1);
+    }
+
+    @Test
+    public void stockExecuteOrders() {
+        Stock stock = new Stock(symbol, "Giggle.com", price);
+        StockExchange exchange = new StockExchange();
+        Brokerage bk = new Brokerage(exchange);
+        Trader trader1 = new Trader(bk, "John", "pass");
+        Trader trader2 = new Trader(bk, "Jane", "word");
+        TradeOrder buy = new TradeOrder(trader, symbol, true,
+                marketOrder, numShares, price);
+        TraderOrder sell = new TradeOrder(trader, symbol, false,
+                marketOrder, numShares, price);
+
+        stock.placeOrder(buy);
+        stock.placeOrder(sell);
+        // will call execute order
+
+        assertTrue(stock.getVolume() == 1);
+    }
     
     // Remove block comment below to run JUnit test in console
 /*
