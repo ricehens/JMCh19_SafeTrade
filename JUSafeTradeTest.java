@@ -534,9 +534,9 @@ public class JUSafeTradeTest
         Brokerage bk = new Brokerage(exchange);
         Trader trader1 = new Trader(bk, "John", "pass");
         Trader trader2 = new Trader(bk, "Jane", "word");
-        TradeOrder buy = new TradeOrder(trader, symbol, true,
+        TradeOrder buy = new TradeOrder(trader1, symbol, true,
                 marketOrder, numShares, price);
-        TraderOrder sell = new TradeOrder(trader, symbol, false,
+        TraderOrder sell = new TradeOrder(trader2, symbol, false,
                 marketOrder, numShares, price);
 
         stock.placeOrder(buy);
