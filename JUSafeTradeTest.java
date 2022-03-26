@@ -30,7 +30,7 @@ import junit.framework.JUnit4TestAdapter;
 public class JUSafeTradeTest
 {
     // --Test TradeOrder
-    /**
+    /*
      * TradeOrder tests:
      *   TradeOrderConstructor - constructs TradeOrder and then compare toString
      *   TradeOrderGetTrader - compares value returned to constructed value

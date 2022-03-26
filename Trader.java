@@ -1,22 +1,17 @@
 import java.lang.reflect.*;
 import java.util.*;
-/**
-   Trader class
 
+/**
+ * Represents a stock trader.
+ *
  * @author Andrew Yuan
  * @author Eric Shen
  * @author Sophia Yang
  * @version 2022-03-09
  * @author Assignment: JM Chapter 19 - SafeTrade
  * @author Sources: N/A
-
  */
-/**
- * Represents a stock trader.
- */
-public class Trader
-    implements Comparable<Trader>
-{
+public class Trader implements Comparable<Trader> {
     private Brokerage     brokerage;
     private String        screenName;
     private String        password;
@@ -29,8 +24,7 @@ public class Trader
      * @param name trader screen name
      * @param pswd account password
      */
-    public Trader(Brokerage brokerage, java.lang.String name, java.lang.String pswd)
-    {
+    public Trader(Brokerage brokerage, String name, String pswd) {
         this.brokerage = brokerage;
         screenName = name;
         password = pswd;
@@ -40,59 +34,52 @@ public class Trader
 
     // getter methods
     /**
-     * get name of trader
+     * Returns name of trader
      * @return screenname
      */
-    public java.lang.String getName()
-    {
+    public java.lang.String getName() {
         return screenName;
     }
 
     /**
-     * get user password
-     * @return pswd
+     * Returns user password
+     * @return password
      */
-    public java.lang.String getPassword()
-    {
+    public java.lang.String getPassword() {
         return password;
     }
 
     /**
-     * compare traders
+     * Compare traders
+     * @param other the trader to compare to
      * @return int compare
      */
-    public int compareTo(Trader other)
-    {
+    public int compareTo(Trader other) {
         return getName().compareToIgnoreCase(other.getName());
     }
 
     /**
-     * check if traders are equal
+     * Checks if traders are equal
+     * @param other the trader to compare to
      * @return true if equal
      */
-    public boolean equals(java.lang.Object other)
-    {
-        if (other instanceof Trader)
-        {
-            Trader t = (Trader)other;
+    public boolean equals(Object other) {
+        if (other instanceof Trader) {
+            Trader t = (Trader) other;
             return getName().equals(t.getName());
         }
-        else
-        {
+        else {
             throw new ClassCastException();
         }
     }
 
     /**
-     * open trader window
+     * Opens trader window
      */
-    public void openWindow()
-    {
+    public void openWindow() {
         myWindow = new TraderWindow(this);
-        if (mailbox.size() != 0)
-        {
-            for (String a : mailbox)
-            {
+        if (mailbox.size() != 0) {
+            for (String a : mailbox) {
                 myWindow.showMessage(a);
                 mailbox.remove(a);
             }
@@ -103,22 +90,18 @@ public class Trader
      * check if mailbox empty
      * @return true if not empty
      */
-    public boolean hasMessages()
-    {
+    public boolean hasMessages() {
         return mailbox.size() != 0;
     }
 
     /**
-     * recieve message
+     * Recieves message
      * @param msg message in mailbox
      */
-    public void receiveMessage(java.lang.String msg)
-    {
+    public void receiveMessage(String msg) {
         mailbox.add(msg);
-        if (myWindow != null)
-        {
-            for (String a : mailbox)
-            {
+        if (myWindow != null) {
+            for (String a : mailbox) {
                 myWindow.showMessage(a);
                 mailbox.remove(a);
             }
@@ -126,28 +109,26 @@ public class Trader
     }
 
     /**
-     * get quote
+     * Gets quote
      * @param symbol of company
      */
-    public void getQuote(java.lang.String symbol)
+    public void getQuote(String symbol)
     {
         brokerage.getQuote(symbol, this);
     }
 
     /**
-     * place order
+     * Places order
      * @param order trade order
      */
-    public void placeOrder(TradeOrder order)
-    {
+    public void placeOrder(TradeOrder order) {
         brokerage.placeOrder(order);
     }
 
     /**
-     * quit trader
+     * Quits trader
      */
-    public void quit()
-    {
+    public void quit() {
         brokerage.logout(this);
         myWindow = null;
     }
@@ -160,8 +141,7 @@ public class Trader
      * testing 
      * @return mailbox
      */
-    protected Queue<String> mailbox()
-    {
+    protected Queue<String> mailbox() {
         return mailbox;
     }
 
@@ -175,25 +155,24 @@ public class Trader
      * 
      * @return a string representation of this Trader.
      */
-    public String toString()
-    {
+    public String toString() {
         String str = this.getClass().getName() + "[";
         String separator = "";
 
         Field[] fields = this.getClass().getDeclaredFields();
 
-        for (Field field : fields)
-        {
-            try
-            {
-                if (field.getType().getName().equals("Brokerage"))
-                    str += separator + field.getType().getName() + " " + field.getName();
-                else
-                    str += separator + field.getType().getName() + " " + field.getName() + ":"
-                        + field.get(this);
+        for (Field field : fields) {
+            try {
+                if (field.getType().getName().equals("Brokerage")) {
+                    str += separator + field.getType().getName() + " "
+                        + field.getName();
+                }
+                else {
+                    str += separator + field.getType().getName() + " "
+                        + field.getName() + ":" + field.get(this);
+                }
             }
-            catch (IllegalAccessException ex)
-            {
+            catch (IllegalAccessException ex) {
                 System.out.println(ex);
             }
 
