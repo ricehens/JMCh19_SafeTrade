@@ -7,7 +7,14 @@ import java.lang.reflect.*;
  * Represents a buy or sell order for trading a given number of shares of a
  * specified stock.
  * Uses a priority queue<tradeorder>
+ * @author Andrew Yuan
+ * @author Eric Shen
+ * @author Sophia Yang
+ * @version 2022-03-09
+ * @author Assignment: JM Chapter 19 - SafeTrade
+ * @author Sources: N/A
  */
+
 public class TradeOrder
 {
     private Trader trader;
@@ -22,7 +29,15 @@ public class TradeOrder
     // or descending comparator
 
     // TODO complete class
-
+    /**
+     * tradeorder constructor
+     * @param trader this trader
+     * @param symbol company symbol
+     * @param buyOrder buy an order
+     * @param marketOrder market order
+     * @param numShares num of shares
+     * @param price share price
+     */
     public TradeOrder(Trader trader, String symbol, 
                     boolean buyOrder, boolean marketOrder, 
                     int numShares, double price) {
@@ -33,54 +48,92 @@ public class TradeOrder
         this.numShares = numShares;
         this.price = price;
     }
-
+    /**
+     * get the trader
+     * @return trader 
+     */
     public Trader getTrader()
     {
         return trader;
     }
 
+    /**
+     * get symbol
+     * @return symbol
+     */
     public java.lang.String getSymbol()
     {
         return symbol;
     }
 
+    /**
+     * is buyorder
+     * @return buyorder
+     */
     public boolean isBuy()
     {
         return buyOrder;
     }
     
+    /**
+     * is sell order
+     * @return true if not a buy order
+     */
     public boolean isSell()
     {
         return !buyOrder;
     }
 
+    /**
+     * is market order
+     * @return true if marketorder
+     */
     public boolean isMarket()
     {
         return marketOrder;
     }
 
+    /**
+     * is limit order
+     * @return not marketorder
+     */
     public boolean isLimit()
     {
         return !marketOrder;
     }
 
+    /**
+     * get shares
+     * @return num of shares
+     */
     public int getShares()
     {
         return numShares;
     }
 
-    //return price per share for trade order
+    /**
+     * price per share
+     * @return price per share for trade order
+     */
     public double getPrice()
     {
         return price;
     }
     
+    /**
+     * subtract shares
+     * @param shares recent shares
+     */
     public void subtractShares(int shares)
     {
         if (shares > numShares)
+        {
             throw new IllegalArgumentException(); 
+        }
         else
+        {
             numShares -= shares;
+        }
     }
 
     //
