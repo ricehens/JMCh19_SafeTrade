@@ -4,6 +4,7 @@ import java.lang.reflect.*;
 
 /**
  * Represents a stock in the SafeTrade project
+ *
  * @author Andrew Yuan
  * @author Eric Shen
  * @author Sophia Yang

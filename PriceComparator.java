@@ -1,9 +1,13 @@
 /**
  * A price comparator for trade orders.
+ *
+ * @author Andrew Yuan
+ * @author Eric Shen
+ * @author Sophia Yang
+ * @version 2022-03-09
+
  */
 public class PriceComparator implements java.util.Comparator<TradeOrder> {
-
-    // TODO complete class
 
     private boolean ascending;
     
