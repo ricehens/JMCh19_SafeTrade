@@ -536,7 +536,7 @@ public class JUSafeTradeTest
         Trader trader2 = new Trader(bk, "Jane", "word");
         TradeOrder buy = new TradeOrder(trader1, symbol, true,
                 marketOrder, numShares, price);
-        TraderOrder sell = new TradeOrder(trader2, symbol, false,
+        TradeOrder sell = new TradeOrder(trader2, symbol, false,
                 marketOrder, numShares, price);
 
         stock.placeOrder(buy);
