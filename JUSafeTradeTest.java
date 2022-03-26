@@ -509,16 +509,6 @@ public class JUSafeTradeTest
     }
 
     @Test
-    public void stockGetQuoteEmpty() {
-        Stock stock = new Stock(symbol, "Giggle.com", price);
-        assertEquals(stock.getQuote(),
-                String.format("Giggle.com (%s)%n"
-                    + "Price: %.2f  hi: %.2f  lo: %.2f  vol: 0%n"
-                    + "Ask: none  Bid: none",
-                    symbol, price, price, price));
-    }
-
-    @Test
     public void stockPlaceOrder() {
         Stock stock = new Stock(symbol, "Giggle.com", price);
         StockExchange exchange = new StockExchange();
@@ -543,7 +533,6 @@ public class JUSafeTradeTest
         TradeOrder sell = new TradeOrder(trader2, symbol, false,
                 marketOrder, numShares, price);
 
-
         stock.placeOrder(buy);
         assertEquals(stock.getQuote(),
                 String.format("Giggle.com (%s)%n"
@@ -557,8 +546,35 @@ public class JUSafeTradeTest
                     + "Price: %.2f  hi: %.2f  lo: %.2f  vol: %d%n"
                     + "Ask: none  Bid: none",
                     symbol, price, price, price, numShares));
-
     }
+
+    @Test
+    public void stockExecuteOrders2() {
+        Stock stock = new Stock(symbol, "Giggle.com", price);
+        StockExchange exchange = new StockExchange();
+        Brokerage bk = new Brokerage(exchange);
+        Trader trader1 = new Trader(bk, "John", "pass");
+        Trader trader2 = new Trader(bk, "Jane", "word");
+        TradeOrder buy = new TradeOrder(trader1, symbol, true,
+                marketOrder, numShares, price);
+        TradeOrder sell = new TradeOrder(trader2, symbol, false,
+                marketOrder, numShares, price);
+
+        stock.placeOrder(sell);
+        assertEquals(stock.getQuote(),
+                String.format("Giggle.com (%s)%n"
+                    + "Price: %.2f  hi: %.2f  lo: %.2f  vol: %d%n"
+                    + "Ask: none  Bid: %.2f size: %d",
+                    symbol, price, price, price, 0, price, numShares));
+
+        stock.placeOrder(buy);
+        assertEquals(stock.getQuote(),
+                String.format("Giggle.com (%s)%n"
+                    + "Price: %.2f  hi: %.2f  lo: %.2f  vol: %d%n"
+                    + "Ask: none  Bid: none",
+                    symbol, price, price, price, numShares));
+    }
+
     
     // Remove block comment below to run JUnit test in console
     public static junit.framework.Test suite()
