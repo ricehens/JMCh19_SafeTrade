@@ -600,6 +600,26 @@ public class JUSafeTradeTest
                     symbol, price, price, price, numShares));
     }
 
+    @Test
+    public void toStringTest() {
+        Stock stock = new Stock(symbol, "Giggle.com", price);
+        StockExchange exchange = new StockExchange();
+        Brokerage bk = new Brokerage(exchange);
+        Trader trader = new Trader(bk, "John", "pass");
+        TradeOrder to = new TradeOrder(trader, symbol, buyOrder,
+                marketOrder, numShares, price);
+        PriceComparator pc = new PriceComparator(false);
+        TraderWindow tw = new TraderWindow(null);
+
+        assertNotNull(stock.toString());
+        assertNotNull(exchange.toString());
+        assertNotNull(bk.toString());
+        assertNotNull(trader.toString());
+        assertNotNull(to.toString());
+        assertNotNull(pc.toString());
+        assertNotNull(tw.toString());
+    }
+
 
     // Remove block comment below to run JUnit test in console
     public static junit.framework.Test suite()
