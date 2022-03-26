@@ -485,7 +485,11 @@ public class JUSafeTradeTest
         TradeOrder to = new TradeOrder(trader, symbol, buyOrder, marketOrder, numShares, price);
         bk.placeOrder(to);
         assertTrue( "<< Brokerage: " + exchange.getQuote(symbol).equals(symbol + " not found") + 
-            " should be " + false + " >>", !exchange.getQuote(symbol).equals(symbol + " not found"));
+            " should be " + true + " >>", exchange.getQuote(symbol).equals(symbol + " not found"));
+        exchange.listStock(symbol, "Giggle.com", price);
+        bk.placeOrder(to);
+        assertFalse( "<< Brokerage: " + exchange.getQuote(symbol).equals(symbol + " not found") + 
+            " should be " + false + " >>", exchange.getQuote(symbol).equals(symbol + " not found"));
     }
     
     // --Test StockExchange
@@ -536,19 +540,27 @@ public class JUSafeTradeTest
         Trader trader2 = new Trader(bk, "Jane", "word");
         TradeOrder buy = new TradeOrder(trader1, symbol, true,
                 marketOrder, numShares, price);
+        TradeOrder sell = new TradeOrder(trader2, symbol, false,
+                marketOrder, numShares, price);
+
 
         stock.placeOrder(buy);
-
-        assertTrue(stock.getVolume() == 1);
         assertEquals(stock.getQuote(),
                 String.format("Giggle.com (%s)%n"
-                    + "Price: %.2f  hi: %.2f  lo: %.2f  vol: 1%n"
+                    + "Price: %.2f  hi: %.2f  lo: %.2f  vol: %d%n"
                     + "Ask: %.2f size: %d  Bid: none",
-                    symbol, price, price, price, 1, price, numShares));
+                    symbol, price, price, price, 0, price, numShares));
+
+        stock.placeOrder(sell);
+        assertEquals(stock.getQuote(),
+                String.format("Giggle.com (%s)%n"
+                    + "Price: %.2f  hi: %.2f  lo: %.2f  vol: %d%n"
+                    + "Ask: none  Bid: none",
+                    symbol, price, price, price, numShares));
+
     }
     
     // Remove block comment below to run JUnit test in console
-/*
     public static junit.framework.Test suite()
     {
         return new JUnit4TestAdapter( JUSafeTradeTest.class );
@@ -558,5 +570,4 @@ public class JUSafeTradeTest
     {
         org.junit.runner.JUnitCore.main( "JUSafeTradeTest" );
     }
-*/
 }
