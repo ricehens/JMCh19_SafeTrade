@@ -505,7 +505,7 @@ public class JUSafeTradeTest
     }
 
     @Test
-    public void stockGetQuote() {
+    public void stockGetQuoteEmpty() {
         Stock stock = new Stock(symbol, "Giggle.com", price);
         assertEquals(stock.getQuote(),
                 String.format("Giggle.com (%s)%n"
@@ -536,14 +536,15 @@ public class JUSafeTradeTest
         Trader trader2 = new Trader(bk, "Jane", "word");
         TradeOrder buy = new TradeOrder(trader1, symbol, true,
                 marketOrder, numShares, price);
-        TradeOrder sell = new TradeOrder(trader2, symbol, false,
-                marketOrder, numShares, price);
 
         stock.placeOrder(buy);
-        stock.placeOrder(sell);
-        // will call execute order
 
         assertTrue(stock.getVolume() == 1);
+        assertEquals(stock.getQuote(),
+                String.format("Giggle.com (%s)%n"
+                    + "Price: %.2f  hi: %.2f  lo: %.2f  vol: 1%n"
+                    + "Ask: %.2f size: %d  Bid: none",
+                    symbol, price, price, price, 1, price, numShares));
     }
     
     // Remove block comment below to run JUnit test in console
