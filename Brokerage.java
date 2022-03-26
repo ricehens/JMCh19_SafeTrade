@@ -3,15 +3,17 @@ import java.util.*;
 
 /**
  * Represents a brokerage.
+ * @author Andrew Yuan
+ * @author Eric Shen
+ * @author Sophia Yang
+ * @version 2022-03-09
  */
 public class Brokerage implements Login
 {
     private Map<String, Trader> traders;
     private Set<Trader> loggedTraders;
     private StockExchange exchange;
-
-    // TODO complete class
-
+    
     /**
      * Constructs a Brokerage as part of a certain StockExchange.
      * @param exchange the StockExchange it is for
@@ -51,7 +53,7 @@ public class Brokerage implements Login
      * @param trader the trader who requested a quote
      */
     public void getQuote(String symbol, Trader trader) {
-        trader.receiveMessage(exchange.getQuote(symbol));
+        trader.receiveMessage(symbol);
     }
     
     /**
@@ -99,16 +101,28 @@ public class Brokerage implements Login
     //
     // The following are for test purposes only
     //
+    /**
+     * Gets the traders.
+     * @return traders
+     */
     protected Map<String, Trader> getTraders()
     {
         return traders;
     }
 
+    /**
+     * Gets the logged traders.
+     * @return loggedTraders
+     */
     protected Set<Trader> getLoggedTraders()
     {
         return loggedTraders;
     }
 
+    /**
+     * Gets the stock exchange.
+     * @return exchange
+     */
     protected StockExchange getExchange()
     {
         return exchange;
