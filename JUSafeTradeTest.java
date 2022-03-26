@@ -360,25 +360,47 @@ public class JUSafeTradeTest
     }
 
     @Test
-    public void brokerageAddUserErr1()
+    public void brokerageAddUserErr1_1()
     {
         StockExchange exchange = new StockExchange();
         Brokerage bk = new Brokerage(exchange);
         String name = "Joe";
         String password = "p";
         assertEquals( "<< Brokerage: addUser(" + name + ", " + password 
-            + ") should be " + -1 + ">>", -1, bk.addUser(name, password) );
+                + ") should be " + -1 + ">>", -1, bk.addUser(name, password) );
     }
 
     @Test
-    public void brokerageAddUserErr2()
+    public void brokerageAddUserErr1_2()
+    {
+        StockExchange exchange = new StockExchange();
+        Brokerage bk = new Brokerage(exchange);
+        String name = "BillyBobJoe";
+        String password = "p";
+        assertEquals( "<< Brokerage: addUser(" + name + ", " + password 
+                + ") should be " + -1 + ">>", -1, bk.addUser(name, password) );
+    }
+
+    @Test
+    public void brokerageAddUserErr2_1()
     {
         StockExchange exchange = new StockExchange();
         Brokerage bk = new Brokerage(exchange);
         String name = "John";
         String password = "p";
         assertEquals( "<< Brokerage: addUser(" + name + ", " + password 
-            + ") should be " + -2 + ">>", -2, bk.addUser(name, password) );
+                + ") should be " + -2 + ">>", -2, bk.addUser(name, password) );
+    }
+
+    @Test
+    public void brokerageAddUserErr2_2()
+    {
+        StockExchange exchange = new StockExchange();
+        Brokerage bk = new Brokerage(exchange);
+        String name = "John";
+        String password = "passwordpassword";
+        assertEquals( "<< Brokerage: addUser(" + name + ", " + password 
+                + ") should be " + -2 + ">>", -2, bk.addUser(name, password) );
     }
 
     @Test
@@ -390,7 +412,7 @@ public class JUSafeTradeTest
         String password = "pass";
         bk.addUser(name, password);
         assertEquals( "<< Brokerage: addUser(" + name + ", " + password 
-            + ") should be " + -3 + ">>", -3, bk.addUser(name, password) );
+                + ") should be " + -3 + ">>", -3, bk.addUser(name, password) );
     }
 
     @Test
@@ -401,7 +423,7 @@ public class JUSafeTradeTest
         String name = "John";
         String password = "pass";
         assertEquals( "<< Brokerage: addUser(" + name + ", " + password 
-            + ") should be " + 0 + ">>", 0, bk.addUser(name, password) );
+                + ") should be " + 0 + ">>", 0, bk.addUser(name, password) );
     }
 
     @Test
@@ -412,7 +434,7 @@ public class JUSafeTradeTest
         Trader trader = new Trader(bk, "name", "pswd");
         bk.getQuote(symbol, trader);
         assertTrue( "<< Brokerage: " + trader.hasMessages() + " should be " + true
-            + " >>", trader.hasMessages() );
+                + " >>", trader.hasMessages() );
     }
 
     @Test
@@ -423,7 +445,7 @@ public class JUSafeTradeTest
         String name = "John";
         String password = "pass";
         assertEquals( "<< Brokerage: login(" + name + ", " + password 
-            + ") should be " + -1 + ">>", -1, bk.login(name, "asdf") );
+                + ") should be " + -1 + ">>", -1, bk.login(name, "asdf") );
     }
 
     @Test
@@ -435,7 +457,7 @@ public class JUSafeTradeTest
         String password = "pass";
         bk.addUser(name, password);
         assertEquals( "<< Brokerage: login(" + name + ", " + "passw" 
-            + ") should be " + -2 + ">>", -2, bk.login(name, "passw") );
+                + ") should be " + -2 + ">>", -2, bk.login(name, "passw") );
     }
 
     @Test
@@ -448,7 +470,7 @@ public class JUSafeTradeTest
         bk.addUser(name, password);
         bk.login(name, password);
         assertEquals( "<< Brokerage: login(" + name + ", " + password 
-            + ") should be " + -3 + ">>", -3, bk.login(name, password) );
+                + ") should be " + -3 + ">>", -3, bk.login(name, password) );
     }
 
     @Test
@@ -458,11 +480,14 @@ public class JUSafeTradeTest
         Brokerage bk = new Brokerage(exchange);
         String name = "John";
         String password = "pass";
+        // Trader trader = new Trader(bk, name, password);
         bk.addUser(name, password);
         assertEquals( "<< Brokerage: login(" + name + ", " + password 
-            + ") should be " + 0 + ">>", 0, bk.login(name, password) );
+                + ") should be " + 0 + ">>", 0, bk.login(name, password) );
+        // assertTrue( "<< Brokerage: " + trader.hasMessages() + " should be " + true
+        //     + " >>", trader.hasMessages() );
     }
-    
+
     @Test
     public void brokerageLogout()
     {
@@ -473,7 +498,7 @@ public class JUSafeTradeTest
         Trader trader = new Trader(bk, "John", "pass");
         bk.logout(trader);
         assertTrue( "<< Brokerage: " + bk.getLoggedTraders().contains(trader) + 
-            " should be " + false + " >>", !bk.getLoggedTraders().contains(trader) );
+                " should be " + false + " >>", !bk.getLoggedTraders().contains(trader) );
     }
 
     @Test
@@ -485,23 +510,23 @@ public class JUSafeTradeTest
         TradeOrder to = new TradeOrder(trader, symbol, buyOrder, marketOrder, numShares, price);
         bk.placeOrder(to);
         assertTrue( "<< Brokerage: " + exchange.getQuote(symbol).equals(symbol + " not found") + 
-            " should be " + true + " >>", exchange.getQuote(symbol).equals(symbol + " not found"));
+                " should be " + true + " >>", exchange.getQuote(symbol).equals(symbol + " not found"));
         exchange.listStock(symbol, "Giggle.com", price);
         bk.placeOrder(to);
         assertFalse( "<< Brokerage: " + exchange.getQuote(symbol).equals(symbol + " not found") + 
-            " should be " + false + " >>", exchange.getQuote(symbol).equals(symbol + " not found"));
+                " should be " + false + " >>", exchange.getQuote(symbol).equals(symbol + " not found"));
     }
-    
+
     // --Test StockExchange
-    
+
     @Test
     public void stockExchangeConstructor() {
         StockExchange exchange = new StockExchange();
         assertNotNull(exchange);
     }
-    
+
     // --Test Stock
-    
+
     @Test
     public void stockConstructor() {
         Stock stock = new Stock(symbol, "Giggle.com", price);
@@ -575,13 +600,13 @@ public class JUSafeTradeTest
                     symbol, price, price, price, numShares));
     }
 
-    
+
     // Remove block comment below to run JUnit test in console
     public static junit.framework.Test suite()
     {
         return new JUnit4TestAdapter( JUSafeTradeTest.class );
     }
-    
+
     public static void main( String args[] )
     {
         org.junit.runner.JUnitCore.main( "JUSafeTradeTest" );
