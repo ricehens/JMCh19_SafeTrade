@@ -4,15 +4,22 @@ import java.lang.reflect.*;
 
 /**
  * Represents a stock in the SafeTrade project
+ * @author Andrew Yuan
+ * @author Eric Shen
+ * @author Sophia Yang
+ * @version 2022-03-09
  */
 public class Stock {
     // public static DecimalFormat money = new DecimalFormat("0.00");
 
     private String stockSymbol;
     private String companyName;
-    private double loPrice, hiPrice, lastPrice;
+    private double loPrice;
+    private double hiPrice;
+    private double lastPrice;
     private int volume;
-    private PriorityQueue<TradeOrder> buyOrders, sellOrders;
+    private PriorityQueue<TradeOrder> buyOrders;
+    private PriorityQueue<TradeOrder> sellOrders;
 
     /**
      * Constructs a new stock with a given symbol, company name, and starting
@@ -49,7 +56,7 @@ public class Stock {
 
             if (buy.isLimit()) {
                 if (sell.isLimit()) {
-                    if (buy.getPrice() < sell.getPrice()) {
+                    if (buy.getPrice() >= sell.getPrice()) {
                         break;
                     }
                     price = sell.getPrice();
@@ -141,34 +148,66 @@ public class Stock {
     // The following are for test purposes only
     //
 
+    /**
+     * Returns the stock symbol.
+     * @return stockSymbol
+     */
     protected String getStockSymbol() {
         return stockSymbol;
     }
 
+    /**
+     * Returns the company name.
+     * @return companyName
+     */
     protected String getCompanyName() {
         return companyName;
     }
 
+    /**
+     * Returns the low price.
+     * @return loPrice
+     */
     protected double getLoPrice() {
         return loPrice;
     }
 
+    /**
+     * Returns the high price.
+     * @return hiPrice
+     */
     protected double getHiPrice() {
         return hiPrice;
     }
 
+    /**
+     * Returns the last price.
+     * @return lastPrice
+     */
     protected double getLastPrice() {
         return lastPrice;
     }
 
+    /**
+     * Returns the volume.
+     * @return volume
+     */
     protected int getVolume() {
         return volume;
     }
 
+    /**
+     * Returns the buy orders.
+     * @return buyOrders
+     */
     protected PriorityQueue<TradeOrder> getBuyOrders() {
         return buyOrders;
     }
 
+    /**
+     * Returns the sell orders.
+     * @return sellOrders
+     */
     protected PriorityQueue<TradeOrder> getSellOrders() {
         return sellOrders;
     }
